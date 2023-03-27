@@ -1,6 +1,6 @@
-﻿using To_Do_List;
+﻿using To_Do_List.Entities;
 
-internal class Program
+class Program
 {
     private static void Main(string[] args)
     {
@@ -8,7 +8,5 @@ internal class Program
         Console.WriteLine("Qual o nome do Usuário? ");
         var name = Console.ReadLine();
         person.SetName(name);
-
-
     }
 }
