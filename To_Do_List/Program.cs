@@ -4,9 +4,8 @@ class Program
 {
     private static void Main(string[] args)
     {
-        Person person = new Person();
-        Console.WriteLine("Qual o nome do Usuário? ");
-        var name = Console.ReadLine();
-        person.SetName(name);
+        ToDo toDo = new ToDo("teste", new Person("Vinicius"), DateTime.Now);
+
+        Console.WriteLine(toDo.ToString());
     }
 }

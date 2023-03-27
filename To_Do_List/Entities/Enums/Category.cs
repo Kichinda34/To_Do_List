@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace To_Do_List.Entities.Enums
+﻿namespace To_Do_List.Entities.Enums
 {
-    internal class Category
+    enum Category : int
     {
+        Important = 1,
+        Particular = 2,
+        Professional = 3
     }
 }
