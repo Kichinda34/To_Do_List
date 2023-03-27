@@ -12,19 +12,21 @@ namespace To_Do_List
 
         public string Name { get; set; }
 
-        public Person Person()
+        public Person (string name)
         {
-            return new Person();
+            Id = this.Id; 
+            Name = name;
         }
 
-        public Person SetName()
+        public Person ()
         {
-
+            Id = Guid.NewGuid ();
         }
 
-        public override string ToString()
+        public Person SetName(string name)
         {
-            
+            this.Name = name;
+            return this;
         }
     }
 }
