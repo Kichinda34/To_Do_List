@@ -12,19 +12,13 @@ namespace To_Do_List.Entities
         public DateTime DueDate { get; private set; }
         public bool Status { get; private set; }
 
-        public ToDo(string description, Person owner, DateTime created)
+        public ToDo(string description, Person owner, DateTime dueDate)
         {
             Id = owner.Id;
             Description = description;
             Owner = owner;
-            if (created == null) 
-            {
-                Created = DateTime.Now;
-            }
-            else
-            {
-                Created = created;
-            }
+            Created = DateTime.Now;
+            DueDate = dueDate;
         }
 
         public ToDo(string description, Category category, Person owner, DateTime created, DateTime dueDate, bool status)
@@ -38,42 +32,11 @@ namespace To_Do_List.Entities
             Status = status;
         }
 
-        //Realiza o cadastro das informações que precisam ser coletadas do usuário sobre as Tarefas.
-        public List<ToDo> CadastrarTarefa(Person owner)
-        {
-            char c;
-            List<ToDo> listaTarefas = new List<ToDo>();
-            do
-            {
-                Console.WriteLine("Informe a descrição da Tarefa: ");
-                string description = (Console.ReadLine());
-
-                Console.WriteLine("Informe a categoria da Tarefa: ");
-                string category = Console.ReadLine();
-
-                Console.WriteLine("Informe a Data Limite da Tarefa: ");
-                string duedate = Console.ReadLine();
-
-                //var task = new ToDo(description, category, owner, DateTime.Parse(duedate));
-
-                List<string> p = new List<string>();
-
-                Console.WriteLine("Tarefa incluída.");
-                Console.WriteLine("------------------");
-                Console.WriteLine("Deseja criar uma nova tarefa? (S/N)");
-                c = char.Parse(Console.ReadLine());
-
-                //listaTarefas.Add(task);
-
-            } while (c != 'n');
-            return listaTarefas;
-        }
-
-        //Salva a lista de tarefas dentro de um arquivo.
         public string ToFile()
         {
             return $"{Id};{Description};{Category};{Owner};{Created.ToString("dd/MM/yyyy")};{DueDate.ToString("dd/MM/yyyy")};{Status}";
         }
+
         /*
         //Quando chamado muda o status da Tarefa de acordo com o prazo informado.
         public void SetStatus(ToDo tarefa)
@@ -88,6 +51,7 @@ namespace To_Do_List.Entities
             }
         }
         */
+
         //Carrega o arquivo para que depois seja possível fazer a impressão para o usuário.
         public StreamReader LoadFile(string arquivo = @"Lista de Tarefas.csv")
         {

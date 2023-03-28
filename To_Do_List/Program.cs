@@ -27,23 +27,60 @@ class Program
         string path = @"C:\Users\" + Environment.UserName + @"\";
         string pathToDoList = path + fileName;
 
-        ToDo toDo = new ToDo("Teste", new Person("Vinicius"), DateTime.Now);
-
         int option;
-
         do
         {
             option = Menu();
+            switch (option)
+            {
+                case 1:
+                    CreateTask(pathToDoList);
+                    Console.Clear();
+                    Console.WriteLine("Tarefa criada com sucesso!!!");
+                    Thread.Sleep(3000);
+                    break;
+                case 5:
+                    Console.Clear();
+                    Console.WriteLine("Aplicativo fechado!\n");
+                    Thread.Sleep(3000);
+                    break;
+                default:
+                    Console.Clear();
+                    Console.WriteLine("Opção inválida! Por favor, escolha uma opção válida");
+                    Thread.Sleep(3000);
+                    break;
+            }
         } while (option != 5);
+    }
 
-        using (StreamWriter sw = File.AppendText(pathToDoList))
+    private static void CreateTask(string path)
+    {
+        string description;
+        string name;
+        DateTime dueDate = DateTime.Now;
+
+        do
+        {
+            Console.Clear();
+            Console.Write("Informe a descrição da tarefa: ");
+            description = Console.ReadLine();
+            Console.Write("Quem é o responsável por essa tarefa: ");
+            name = Console.ReadLine();
+            Console.Write("Data para conclusão (dd/mm/yyyy): ");
+            dueDate = DateTime.Parse(Console.ReadLine());
+            if ((description is "") || (name is ""))
+            {
+                Console.Clear();
+                Console.WriteLine("Por favor, preencha todos os campos");
+                Thread.Sleep(3000);
+            }
+        } while ((description is "") || (name is ""));
+
+        ToDo toDo = new ToDo(description, new Person(name), dueDate);
+
+        using (StreamWriter sw = File.AppendText(path))
         {
             sw.WriteLine(toDo.ToFile());
         }
-    }
-
-    private static void CreateTask()
-    {
-
     }
 }
