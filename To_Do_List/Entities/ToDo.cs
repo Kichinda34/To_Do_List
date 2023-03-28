@@ -4,7 +4,7 @@ namespace To_Do_List.Entities
 {
     class ToDo
     {
-        public Guid Id { get; private set; }
+        public string Id { get; private set; }
         public string Description { get; private set; }
         public Category Category { get; private set; }
         public Person Owner { get; private set; }
@@ -12,12 +12,30 @@ namespace To_Do_List.Entities
         public DateTime DueDate { get; private set; }
         public bool Status { get; private set; }
 
-        public ToDo(string description, Person person, DateTime created)
+        public ToDo(string description, Person owner, DateTime created)
         {
-            Id = Guid.NewGuid();
+            Id = owner.Id;
             Description = description;
-            Owner = person;
+            Owner = owner;
+            if (created == null) 
+            {
+                Created = DateTime.Now;
+            }
+            else
+            {
+                Created = created;
+            }
+        }
+
+        public ToDo(string description, Category category, Person owner, DateTime created, DateTime dueDate, bool status)
+        {
+            Id = owner.Id;
+            Description = description;
+            Category = category;
+            Owner = owner;
             Created = created;
+            DueDate = dueDate;
+            Status = status;
         }
 
         //Realiza o cadastro das informações que precisam ser coletadas do usuário sobre as Tarefas.
@@ -52,16 +70,9 @@ namespace To_Do_List.Entities
         }
 
         //Salva a lista de tarefas dentro de um arquivo.
-        public string ToFile(List<ToDo> listaTarefas)
+        public string ToFile()
         {
-            string arquivo = @"Lista de Tarefas.csv";
-            StreamWriter arquivoDeTarefas = new StreamWriter(arquivo);
-            for (int i = 0; i < listaTarefas.Count; i++)
-            {
-                arquivoDeTarefas.WriteLine(listaTarefas[i].ToString());
-            }
-            arquivoDeTarefas.Close();
-            return arquivo;
+            return $"{Id};{Description};{Category};{Owner};{Created.ToString("dd/MM/yyyy")};{DueDate.ToString("dd/MM/yyyy")};{Status}";
         }
         /*
         //Quando chamado muda o status da Tarefa de acordo com o prazo informado.
@@ -109,7 +120,7 @@ namespace To_Do_List.Entities
 
         public override string ToString()
         {
-            return Id + " | " + Description + " | " + Owner + " | " + Created.ToString("dd/MM/yyyy");
+            return $"{Id} | {Description} | {Category} | {Owner.ToString()} | {Created.ToString("dd/MM/yyyy")} | {DueDate.ToString("dd/MM/yyyy")} | {Status}";
         }
     }
 }

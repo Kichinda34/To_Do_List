@@ -2,24 +2,18 @@
 {
     class Person
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
 
         public Person(string name)
         {
-            Id = this.Id;
+            Id = Guid.NewGuid().ToString().Substring(0, 8);
             Name = name;
         }
 
-        public Person()
+        public void SetName(string name)
         {
-            Id = Guid.NewGuid();
-        }
-
-        public Person SetName(string name)
-        {
-            this.Name = name;
-            return this;
+            Name = name;
         }
 
         public override string ToString()
